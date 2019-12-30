@@ -1,29 +1,34 @@
-export class geneticOptimizer {
+class geneticOptimizer {
   constructor({ initialStateGenerator, mutator, fitnessEvaluator }) {
     //Function that returns an array of random states
     this.initialStateGenerator = initialStateGenerator;
 
-    //Function that slightly modify a state
+    //Function that take a state and return an array of slightly modified states
     this.mutator = mutator;
 
     //Function that associate a fitness score to a given state
     this.fitnessEvaluator = fitnessEvaluator;
   }
 
-  *optimize() {
+  *optimize(iterations) {
     //Generate a population that is an array of states
-    const population = this.initialStateGenerator();
+    let population = this.initialStateGenerator();
+    let count = 0;
+    while (++count < iterations) {
+      //Find Best state in the population
+      let bestFitness = Number.NEGATIVE_INFINITY;
+      const bestState = population.reduce((acc, curr) => {
+        let currentFitness = this.fitnessEvaluator(curr);
+        acc = currentFitness > bestFitness ? curr : acc;
+        bestFitness = currentFitness > bestFitness ? currentFitness : bestFitness;
+        return acc;
+      });
 
-    //Find Best state in the population
-    let bestFitness = Number.NEGATIVE_INFINITY;
-    const bestState = population.reduce((acc, curr) => {
-      let currentFitness = this.fitnessEvaluator(curr);
-      acc = currentFitness > bestFitness ? curr : acc;
-      bestFitness = currentFitness > bestFitness ? currentFitness : bestFitness;
-    });
+      yield bestState;
 
-    while (true) {
-      yield population;
+      //Mutate the best state to generate a new population
+      population = this.mutator(bestState);
     }
   }
 }
+module.exports.geneticOptimizer = geneticOptimizer;
