@@ -10,11 +10,10 @@ class geneticOptimizer {
     this.fitnessEvaluator = fitnessEvaluator;
   }
 
-  *optimize(iterations) {
+  *optimize() {
     //Generate a population that is an array of states
     let population = this.initialStateGenerator();
-    let count = 0;
-    while (++count < iterations) {
+    while (true) {
       //Find Best state in the population
       let bestFitness = Number.NEGATIVE_INFINITY;
       const bestState = population.reduce((acc, curr) => {
