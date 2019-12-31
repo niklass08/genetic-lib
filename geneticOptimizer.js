@@ -30,4 +30,4 @@ class geneticOptimizer {
     }
   }
 }
-module.exports.geneticOptimizer = geneticOptimizer;
+module.exports.GeneticOptimizer = geneticOptimizer;
