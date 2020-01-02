@@ -23,7 +23,7 @@ class geneticOptimizer {
         return acc;
       });
 
-      yield bestState;
+      yield { bestState, population };
 
       //Mutate the best state to generate a new population
       population = this.mutator(bestState);
