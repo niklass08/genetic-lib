@@ -1,4 +1,4 @@
-class geneticOptimizer {
+export class GeneticOptimizer {
   constructor({ initialStateGenerator, mutator, fitnessEvaluator }) {
     //Function that returns an array of random states
     this.initialStateGenerator = initialStateGenerator;
@@ -30,4 +30,3 @@ class geneticOptimizer {
     }
   }
 }
-module.exports.GeneticOptimizer = geneticOptimizer;
